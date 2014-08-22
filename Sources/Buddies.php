@@ -362,7 +362,7 @@ function BuddyApprove()
 	updateMemberData($context['user']['id'], array('buddy_list' => implode(',', $user_info['buddies'])));
 	
 	loadMemberData($_GET['u'], false, 'normal');
-	$buddies = explode(',', $user_profile[$_GET['u']]['buddy_list']);
+	$buddies = array_filter(explode(',', $user_profile[$_GET['u']]['buddy_list']));
 	$buddies[] = $context['user']['id'];
 	updateMemberData($_GET['u'], array('buddy_list' => implode(',', $buddies)));
 	
