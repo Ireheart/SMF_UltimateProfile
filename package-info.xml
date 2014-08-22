@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+	<id>JovanT:ultimate_profile</id>
+	<name>Ultimate Profile</name>
+	<version>0.9.1</version>
+	<type>modification</type>
+
+	<install for="2.0 - 2.0.99">
+		<readme type="inline" parsebbc="true">
+[center][size=18pt][color=red]Ultimate Profile 0.9.1 for SMF 2.0[/color][/size]
+[size=14pt]by Jovan Turanjanin[/size]
+[/center]
+		
+If you are upgrading from older version, [b]please uninstall[/b] it before installing this package.
+		
+Special thanks to [url=http://www.simplemachines.org/community/index.php?action=profile;u=102749]Yağız...[/url] for helping me port UP for SMF 2.0.
+
+
+[b]Important info:[/b]
+
+This modification has conflict with Profile Comments mod. If you have installed this mod before, you should run the following query on your SMF database:
+
+[code]ALTER TABLE smf_profile_comments ADD time INT NOT NULL AFTER date[/code]
+		</readme>
+		<modification>profile.xml</modification>
+		<modification>profile-actions.xml</modification>
+		<modification>profile-modify.xml</modification>
+		<modification>profile-view.xml</modification>
+		<modification>profile.template.xml</modification>
+		<modification>managesettings.xml</modification>
+		<modification>languages.xml</modification>
+		<modification>index.xml</modification>
+		<modification>admin.xml</modification>
+		<modification>managepermissions.xml</modification>
+		<modification>subs-members.xml</modification>
+		<require-dir name="Sources" destination="$boarddir" />
+		<require-dir name="Themes" destination="$boarddir" />
+		<require-dir name="profile_pictures" destination="$boarddir" />
+		<code>database.php</code>
+		<code>helper.php</code>
+	</install>
+	
+	<uninstall>
+		<modification reverse="true">profile.xml</modification>
+		<modification reverse="true">profile-actions.xml</modification>
+		<modification reverse="true">profile-modify.xml</modification>
+		<modification reverse="true">profile-view.xml</modification>
+		<modification reverse="true">profile.template.xml</modification>
+		<modification reverse="true">managesettings.xml</modification>
+		<modification reverse="true">languages.xml</modification>
+		<modification reverse="true">index.xml</modification>
+		<modification reverse="true">admin.xml</modification>
+		<modification reverse="true">managepermissions.xml</modification>
+		<modification reverse="true">subs-members.xml</modification>
+		
+		<remove-file name="$sourcedir/Buddies.php" />
+		<remove-file name="$sourcedir/HtmLawed.php" />
+		<remove-file name="$sourcedir/Profile-Pictures.php" />
+		
+		<remove-file name="$themedir/Buddies.template.php" />
+		<remove-file name="$themedir/ProfilePictures.template.php" />
+		<remove-file name="$themedir/UltimateProfile.template.php" />
+		
+		<remove-file name="$languagedir/UltimateProfile.english.php" />
+		<remove-file name="$languagedir/UltimateProfile.english-utf8.php" />
+		<remove-file name="$languagedir/UltimateProfile.serbian_cyrillic-utf8.php" />
+	</uninstall>
+</package-info>

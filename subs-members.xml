@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+	<id>JovanT:ultimate_profile</id>
+	<version>0.9.1</version>
+	
+	<file name="$sourcedir/Subs-Members.php">
+		<operation>
+			<search position="before"><![CDATA[
+	$smcFunc['db_query']('', '
+		DELETE FROM {db_prefix}collapsed_categories
+		WHERE id_member IN ({array_int:users})',
+		array(
+			'users' => $users,
+		)
+	);
+]]></search>
+			<add><![CDATA[
+	$smcFunc['db_query']('', '
+		DELETE FROM {db_prefix}buddies
+		WHERE id_member IN ({array_int:users}) 
+			OR buddy_id IN ({array_int:users})',
+		array(
+			'users' => $users,
+		)
+	);
+	$smcFunc['db_query']('', '
+		DELETE FROM {db_prefix}profile_comments
+		WHERE comment_member_id IN ({array_int:users})',
+		array(
+			'users' => $users,
+		)
+	);
+	$smcFunc['db_query']('', '
+		DELETE FROM {db_prefix}profile_albums
+		WHERE id_member IN ({array_int:users})',
+		array(
+			'users' => $users,
+		)
+	);
+	$smcFunc['db_query']('', '
+		SELECT ID_PICTURE
+		FROM {db_prefix}profile_pictures
+		WHERE id_member IN ({array_int:users})',
+		array(
+			'users' => $users,
+		)
+	);
+	
+	require_once($sourcedir . '/Profile-Pictures.php');
+	while ($row = $smcFunc['db_fetch_assoc']($request)) {
+		delete_picture($row['ID_PICTURE']);
+	}
+]]></add>
+		</operation>
+	</file>
+</modification>

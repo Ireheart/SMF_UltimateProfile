@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+	<id>JovanT:ultimate_profile</id>
+	<version>0.9.1</version>
+	
+	<file name="$languagedir/Modifications.english.php">
+		<operation>
+			<search position="end" />
+			<add><![CDATA[
+$txt['ultimate_profile'] = 'Ultimate Profile';
+$txt['permissionname_edit_ultimate_profile'] = 'Edit ultimate profile';
+$txt['permissionname_simple_edit_ultimate_profile_own'] = 'Edit their ultimate profile';
+$txt['permissionname_simple_edit_ultimate_profile_any'] = 'Edit other people\'s ultimate profile';
+$txt['permissionname_edit_ultimate_profile_own'] = 'Own profile';
+$txt['permissionname_edit_ultimate_profile_any'] = 'Any profile';
+$txt['permissionhelp_edit_ultimate_profile'] = 'This permission allows user to edit ultimate profile.';
+$txt['cannot_edit_ultimate_profile_own'] = 'You aren\'t allowed to edit your own ultimate profile.';
+$txt['cannot_edit_ultimate_profile_any'] = 'You aren\'t allowed to edit just any ultimate profile.';
+
+]]></add>
+		</operation>
+	</file>
+	
+	<file name="$languagedir/Modifications.english-utf8.php" error="skip">
+		<operation>
+			<search position="end" />
+			<add><![CDATA[
+$txt['ultimate_profile'] = 'Ultimate Profile';
+$txt['permissionname_edit_ultimate_profile'] = 'Edit ultimate profile';
+$txt['permissionname_simple_edit_ultimate_profile_own'] = 'Edit their ultimate profile';
+$txt['permissionname_simple_edit_ultimate_profile_any'] = 'Edit other people\'s ultimate profile';
+$txt['permissionname_edit_ultimate_profile_own'] = 'Own profile';
+$txt['permissionname_edit_ultimate_profile_any'] = 'Any profile';
+$txt['permissionhelp_edit_ultimate_profile'] = 'This permission allows user to edit ultimate profile.';
+$txt['cannot_edit_ultimate_profile_own'] = 'You aren\'t allowed to edit your own ultimate profile.';
+$txt['cannot_edit_ultimate_profile_any'] = 'You aren\'t allowed to edit just any ultimate profile.';
+
+]]></add>
+		</operation>
+	</file>
+		
+	<file name="$languagedir/Modifications.serbian_cyrillic-utf8.php" error="skip">
+		<operation>
+			<search position="end" />
+			<add><![CDATA[
+$txt['ultimate_profile'] = 'Ultimate Profile';
+$txt['permissionname_edit_ultimate_profile'] = 'Измена ultimate профила';
+$txt['permissionname_simple_edit_ultimate_profile_own'] = 'Измена свог ultimate профила';
+$txt['permissionname_simple_edit_ultimate_profile_any'] = 'Измена туђих ultimate профила';
+$txt['permissionname_edit_ultimate_profile_own'] = 'свог профила';
+$txt['permissionname_edit_ultimate_profile_any'] = 'било ког профила';
+$txt['permissionhelp_edit_ultimate_profile'] = 'Ова дозвола омогућава кориснику да врши измену ultimate профила.';
+$txt['cannot_edit_ultimate_profile_own'] = 'Немате дозволу да мењате свој ultimate профил.';
+$txt['cannot_edit_ultimate_profile_any'] = 'Немате дозволу да измените било чији ultimate профил.';
+
+]]></add>
+		</operation>
+	</file>
+</modification>

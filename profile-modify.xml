@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+	<id>JovanT:ultimate_profile</id>
+	<version>0.9.1</version>
+	
+	<file name="$sourcedir/Profile-Modify.php">
+		<operation>
+			<search position="after"><![CDATA[
+// Recursive function to retrieve avatar files
+]]></search>
+			<add><![CDATA[
+function customized($memID)
+{
+	global $context, $modSettings, $sourcedir, $smcFunc, $func, $txt;
+	
+	// Filter bad HTML...
+	require_once $sourcedir . '/HtmLawed.php';
+	
+	/*
+	See http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm for more information.
+	*/
+	$config_filter = array(
+		'safe'=> 1, 
+		'elements' => '*+embed+object+style-form-textarea-input-button'
+	);
+	
+	// HTML&CSS customization field
+	$request = $smcFunc['db_query']('', '
+			SELECT value 
+			FROM {db_prefix}themes 
+			WHERE id_member = {int:id_member}
+			AND variable = "css"',
+			array(
+				'id_member' => $memID,
+			)
+	);
+	list($old_html) = $smcFunc['db_fetch_row']($request);
+	
+	$html = substr(htmLawed(un_htmlspecialchars($old_html), $config_filter), 0, 65533);
+	$smcFunc['db_query']('', '
+			UPDATE {db_prefix}themes SET 
+			value = {string:html} 
+			WHERE id_member = {int:id_member}
+				AND variable = "css"',
+			array(
+				'html' => addslashes(htmlspecialchars($html)),
+				'id_member' => $memID,
+			)
+	);
+	
+	// MediaBox field
+	$request = $smcFunc['db_query']('', '
+			SELECT value 
+			FROM {db_prefix}themes 
+			WHERE id_member = {int:id_member}
+				AND variable = "media"',
+			array(
+				'id_member' => $memID,
+			)
+	);
+	list($old_html) = $smcFunc['db_fetch_row']($request);
+	
+	$html = substr(htmLawed(un_htmlspecialchars($old_html), $config_filter), 0, 65533);
+	$smcFunc['db_query']('', '
+			UPDATE {db_prefix}themes SET 
+			value = {string:html} 
+			WHERE id_member = {int:id_member}
+				AND variable = "media"',
+			array(
+				'html' => addslashes(htmlspecialchars($html)),
+				'id_member' => $memID,
+			)
+	);
+
+	loadLanguage('UltimateProfile');
+
+	$context['sub_template'] = 'customized';
+	$context['page_desc'] = $txt['profile_customized'];
+}
+]]></add>
+		</operation>
+		
+		<operation>
+			<search position="replace"><![CDATA[global $txt, $scripturl, $modSettings;
+	global $context, $user_profile, $memberContext, $smcFunc;
+
+	// For making changes!
+	$buddiesArray = explode(',', $user_profile[$memID]['buddy_list']);]]></search>
+			<add><![CDATA[/*
+	**** Sorry devs, we should comment your codes :/ ****
+	global $txt, $scripturl, $modSettings;
+	global $context, $user_profile, $memberContext, $smcFunc;
+
+	// For making changes!
+	$buddiesArray = explode(',', $user_profile[$memID]['buddy_list']);]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[$context['buddies'][$buddy] = $memberContext[$buddy];
+	}]]></search>
+			<add><![CDATA[$context['buddies'][$buddy] = $memberContext[$buddy];
+	}
+	*/
+	global $sourcedir;
+	require_once($sourcedir . '/Buddies.php');
+	BuddiesMain();]]></add>
+		</operation>
+	</file>
+	
+</modification>

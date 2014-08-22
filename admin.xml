@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+	<id>JovanT:ultimate_profile</id>
+	<version>0.9</version>
+	
+	<file name="$sourcedir/Admin.php">
+		<operation>
+			<search position="before"><![CDATA[// Note the comma!! The setting with automatically appear with the first mod to be added.]]></search>
+			<add><![CDATA[						
+						'ultprofile' => array($txt['ultimate_profile']),]]></add>
+		</operation>
+		</file>
+</modification>

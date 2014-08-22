@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+	<id>JovanT:ultimate_profile</id>
+	<version>0.9.1</version>
+	
+	<file name="$sourcedir/Profile.php">
+		<operation>
+			<search position="before"><![CDATA[loadLanguage('Profile');]]></search>
+			<add><![CDATA[
+	loadLanguage('UltimateProfile');
+]]></add>
+		</operation>
+		
+		<operation>
+			<search position="after"><![CDATA[				'showposts' => array(]]></search>
+			<add><![CDATA[				'pictures' => array(
+					'label' => $txt['profile_pictures_show'],
+					'file' => 'Profile-Pictures.php',
+					'function' => 'pictures',
+					'enabled' => ($modSettings['profile_enable_pictures'] == 1),
+					'sc' => 'post',
+					'permission' => array(
+						'own' => 'profile_view_own',
+						'any' => 'profile_view_any',
+					),
+				),
+				'buddies' => array(
+					'label' => $txt['profile_buddies_show'],
+					'file' => 'Profile-View.php',
+					'function' => 'buddies',
+					'enabled' => (!empty($modSettings['enable_buddylist']) && $modSettings['enable_buddylist'] == 1),
+					'permission' => array(
+						'own' => array('profile_view_own'),
+						'any' => array('profile_view_any'),
+					),
+				),
+				]]></add>
+		</operation>		
+		<operation>
+			<search position="after"><![CDATA[				'theme' => array(]]></search>
+			<add><![CDATA[				'customized' => array(
+					'label' => $txt['profile_customized'],
+					'file' => 'Profile-Modify.php',
+					'function' => 'customized',
+					'sc' => 'post',
+					'permission' => array(
+						'own' => array('edit_ultimate_profile_own', 'edit_ultimate_profile_any'),
+						'any' => array('edit_ultimate_profile_any'),
+					),
+				),
+]]></add>
+		</operation>
+		
+		<operation>
+			<search position="after"><![CDATA[				'issuewarning' => array(]]></search>
+			<add><![CDATA[				'comment' => array(
+					'file' => 'Profile-Actions.php',
+					'function' => 'comment',
+					'sc' => 'post',
+					'permission' => array(
+						'own' => 'profile_view_own',
+						'any' => 'profile_view_any',
+					),
+				),
+				'report' => array(
+					'file' => 'Profile-Actions.php',
+					'function' => 'report',
+					'sc' => 'post',
+					'permission' => array(
+						'own' => array(),
+						'any' => 'profile_view_any',
+					),
+				),
+]]></add>
+		</operation>
+		
+		<operation>
+			<search position="end" />
+			<add><![CDATA[
+
+function get_extension($filename)
+{
+	return substr(strrchr($filename, '.'), 1);
+}
+
+function is_buddy($memID, $buddyID)
+{
+	global $smcFunc, $buddy_list, $modSettings;
+	
+	// When buddy list if off, everybody is your friend ;)
+	if (!isset($modSettings['enable_buddylist']) || $modSettings['enable_buddylist'] == '0')
+		return true;
+	
+	if (!is_array($buddy_list)) {
+		$request = $smcFunc['db_query']('', '
+			SELECT buddy_list 
+			FROM {db_prefix}members 
+			WHERE id_member = {int:id_member}',
+			array(
+				'id_member' => $memID,
+			)
+		);
+		list($buddy_list) = $smcFunc['db_fetch_row']($request);
+		
+		$buddy_list = explode(',', $buddy_list);
+	}
+	
+	if (in_array($buddyID, $buddy_list))
+		return true;
+	else
+		return false;
+}
+]]></add>
+		</operation>
+	</file>
+	
+</modification>
